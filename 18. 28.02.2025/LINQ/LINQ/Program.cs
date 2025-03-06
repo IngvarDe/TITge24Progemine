@@ -10,6 +10,11 @@
             Console.WriteLine("2. Max LINQ");
             Console.WriteLine("3. Aggregate LINQ");
             Console.WriteLine("4. Min LINQ");
+            Console.WriteLine("5. Skip LINQ");
+            Console.WriteLine("6. SkipWhile LINQ");
+            Console.WriteLine("7. Take LINQ");
+            Console.WriteLine("8. TakeWhile LINQ");
+            Console.WriteLine("9. FirstOrDefault LINQ");
 
             string choice = Console.ReadLine();
 
@@ -29,6 +34,26 @@
 
                 case "4":
                     MinLINQ();
+                    break;
+
+                case "5":
+                    Skip();
+                    break;
+
+                case "6":
+                    SkipWhile();
+                    break;
+
+                case "7":
+                    Take();
+                    break;
+
+                case "8":
+                    TakeWhile();
+                    break;
+
+                case "9":
+                    FirstOrDefault();
                     break;
 
                 default:
@@ -83,11 +108,62 @@
 
         public static void MinLINQ()
         {
-            //
             var oldestPerson = PeopleList.people
                 .Min(x => x.Age);
 
             Console.WriteLine("Kõige noorem inimene on " + oldestPerson + " aastane.");
+        }
+
+        public static void Skip()
+        {
+            Console.WriteLine("----------Skip---------");
+            var skip = PeopleList.people.Skip(3);
+
+            foreach (var x in skip)
+            {
+                Console.WriteLine(x.Id);
+            }
+        }
+
+        public static void SkipWhile()
+        {
+            Console.WriteLine("----------SkipWhile---------");
+            var skip = PeopleList.people.SkipWhile(x => x.Age > 18);
+
+            foreach (var x in skip)
+            {
+                Console.WriteLine(x.Id + " " + x.Name);
+            }
+        }
+
+        public static void Take()
+        {
+            Console.WriteLine("----------Take---------");
+            var skip = PeopleList.people.Skip(3);
+
+            foreach (var x in skip)
+            {
+                Console.WriteLine(x.Id + " " + x.Name);
+            }
+        }
+
+        public static void TakeWhile()
+        {
+            Console.WriteLine("----------TakeWhile---------");
+            var skip = PeopleList.people.TakeWhile(x => x.Age > 18);
+
+            foreach (var x in skip)
+            {
+                Console.WriteLine(x.Id + " " + x.Name);
+            }
+        }
+
+        public static void FirstOrDefault()
+        {
+            string firstLongName = PeopleList.people
+                .FirstOrDefault(person => person.Name.Length > 5)?.Name;
+
+            Console.WriteLine("The first long name is '{0}'", firstLongName);
         }
 
         //Teha Skip, SkipWhile, Take, TakeWhile ja FirstOrDefault LINQ.
