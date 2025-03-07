@@ -37,6 +37,8 @@ namespace Mapping
 
             var mapper = Program.InitializeAutomapper();
 
+            //uurida Internetist, et miks on vaja mappida???
+
         }
 
         //Mapper on Automapper nugetist saadud class
