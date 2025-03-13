@@ -37,7 +37,6 @@
             Console.WriteLine(numbrid.Rest.Item1.Item2);
 
             int someNumber = 0;
-            int Item = 0;
 
             for (int i = 0; i < someNumber; i++)
             {
