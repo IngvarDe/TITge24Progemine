@@ -10,6 +10,11 @@
             Console.WriteLine("Sisesta teine number");
             int secondNr = Convert.ToInt32(Console.ReadLine());
             //kutsud esile Rectangle classi ja suunad kaks v''rtust sellesse klassi
+            Rectangle rectangle = new Rectangle();
+            rectangle.SetWidth(firstNr);
+            rectangle.SetHeight(secondNr);
+
+            Console.WriteLine("Pindala on: {0}", rectangle.GetArea());
         }
     }
 
