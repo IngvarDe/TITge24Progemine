@@ -18,7 +18,7 @@
             }
             else if (brutoSalary >= 1200.01 && brutoSalary <= 2100)
             {
-                 Salary.SalaryCalculationFrom1200To2100(brutoSalary);
+                 Salary.SalaryCalculationFrom1200To2100(brutoSalary, netIncome);
             }
             else if (brutoSalary >= 2100.01)
             {
@@ -50,9 +50,15 @@
             return netIncome;
         }
 
-        public static double SalaryCalculationFrom1200To2100(double netIncome)
+        public static double SalaryCalculationFrom1200To2100(double brutoIncome, double netIncome)
         {
+            double incomeTax = 0.22;
+            // tuleb teha kalkulatsioon 654 - 0.72667 * (brutopalk - 1200)
+            double taxFreeIncome = 654;
 
+            double pensionFond = brutoIncome * 0.02;
+            double unEmpTax = brutoIncome * 0.016;
+            //kalkulatsioon sissetulekumaksu osas
 
             return netIncome;
         }
