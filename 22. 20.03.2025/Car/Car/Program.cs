@@ -20,13 +20,50 @@ namespace Car
 
         static void Main(string[] args)
         {
+            Program program = new Program();
+            program.Game();
+        }
 
+        void Game()
+        {
 
             Console.CursorVisible = false;
-
             try
             {
-
+                Initialize();
+                LaunchScreen();
+                while (keepPlaying)
+                {
+                    InitializeScene();
+                    while (gameRunning)
+                    {
+                        if (Console.WindowHeight < height || Console.WindowWidth < width)
+                        {
+                            consoleSizeError = true;
+                            keepPlaying = false;
+                            break;
+                        }
+                        HandleInput();
+                        Update();
+                        Render();
+                        if (gameRunning)
+                        {
+                            Thread.Sleep(TimeSpan.FromMilliseconds(33));
+                        }
+                    }
+                    if (keepPlaying)
+                    {
+                        GameOverScreen();
+                    }
+                }
+                Console.Clear();
+                if (consoleSizeError)
+                {
+                    Console.WriteLine("Console/Terminal is to small.");
+                    Console.WriteLine($"Minimum size is {width} width x {height} height.");
+                    Console.WriteLine("Increase the size of the console window.");
+                }
+                Console.WriteLine("Drive was closed.");
             }
             finally
             {
@@ -187,6 +224,49 @@ namespace Car
                 default:
                     goto GetInput;
             }
+        }
+
+        void Update()
+        {
+            for (int i = 0; i < height - 1; i++)
+            {
+                for (int j = 0; j < width; j++)
+                {
+                    scene[i, j] = scene[i + 1, j];
+                }
+            }
+
+            int roadUpdate =
+                Random.Shared.Next(5) < 4 ? previousRoadUpdate :
+                Random.Shared.Next(3) - 1;
+            if(roadUpdate is -1 && scene[height - 1, 0] is ' ') roadUpdate = 1;
+            if(roadUpdate is 1 && scene[height - 1, width - 1] is ' ') roadUpdate = -1;
+            switch (roadUpdate)
+            {
+                case -1: //left
+                    for (int i = 0; i < width - 1; i++)
+                    {
+                        scene[height - 1, i] = scene[height - 1, i + 1];
+                    }
+                    scene[height - 1, width - 1] = '.';
+                    break;
+
+                case 1:
+                    for (int i = width - 1; i > 0; i--)
+                    {
+                        scene[height - 1, i] = scene[height - 1, i - 1];
+                    }
+                    scene[height - 1, 0] = '.';
+                    break;
+
+            }
+            previousRoadUpdate = roadUpdate;
+            carPosition += carVelocity;
+            if (carPosition < 0 || carPosition >= width || scene[1, carPosition] is not ' ')
+            {
+                gameRunning = false;
+            }
+            score++;
         }
     }
 }
